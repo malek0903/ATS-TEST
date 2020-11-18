@@ -120,5 +120,8 @@
       }
     }
   },
-  "defaultProject": "FrontATS"
+  "defaultProject": "FrontATS",
+  "cli": {
+    "analytics": false
+  }
 }

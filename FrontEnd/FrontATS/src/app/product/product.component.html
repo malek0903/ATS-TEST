@@ -1,0 +1,29 @@
+<select name="catego" [(ngModel)]= "catego">
+    <option *ngFor="let p of listProduct">{{p.category}}</option>
+  </select>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Product Name</th>
+            <th scope="col">category</th>
+            <th scope="col">price</th>
+            <th scope="col">imageUrl</th>
+            <th scope="col">Review avg</th>
+        </tr>
+    </thead>
+    <tbody>
+        <thead *ngFor="let product of listProduct">
+        <tr *ngIf="product.category == catego || catego == '' " >
+            <td>{{product.productName}}</td>
+            <td>{{product.category}}</td>
+            <td>{{product.price}}</td>
+            <td><img src="{{product.imageUrl}}" style="width: 100px; height: 100px"></td>
+            <td>{{getAvg(product)}}</td>
+            <td>             
+                     <button (click)="productDetails(product.id)" >Details</button>
+            </td>
+        </tr>
+    </thead>
+    </tbody>
+</table>
