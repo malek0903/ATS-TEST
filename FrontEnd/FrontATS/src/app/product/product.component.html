@@ -1,4 +1,5 @@
 <select name="catego" [(ngModel)]= "catego">
+    <option value="">All</option>
     <option *ngFor="let p of listProduct">{{p.category}}</option>
   </select>
 
@@ -15,6 +16,7 @@
     <tbody>
         <thead *ngFor="let product of listProduct">
         <tr *ngIf="product.category == catego || catego == '' " >
+
             <td>{{product.productName}}</td>
             <td>{{product.category}}</td>
             <td>{{product.price}}</td>

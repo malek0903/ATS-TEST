@@ -15,14 +15,14 @@ export class ProductComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.catego = "";
+    this.catego = ""
     this.productService.getAllProducts().subscribe(
       (data: Product[]) => { this.listProduct = data; });
+
+      console.log(this.listProduct)
   }
 
-  getAllProduct() {
-  
-  }
+ 
 
   productDetails(id: number){
       console.log("sqkhdhkbqs"+id)
@@ -38,8 +38,5 @@ export class ProductComponent implements OnInit {
     return rating/(nb *5);
   }
 
-  getProduitbyCateg(categ:string){
-    this.productService.getProductByCateg(categ);
-  }
-
+ 
 }

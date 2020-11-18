@@ -20,7 +20,7 @@ export class ProductService {
     return this.http.get("http://localhost:8080/SpringMVC/api/products/"+id);
   }
 
-  getProductByCateg (id: string ): Observable<any> {
-    return this.http.get("http://localhost:8080/SpringMVC/api/products/categ"+id);
+  getProductByCateg (categ: string ): Observable<any> {
+    return this.http.get("http://localhost:8080/SpringMVC/api/products/categ"+categ);
   }
 }
