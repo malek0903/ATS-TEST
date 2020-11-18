@@ -35,41 +35,46 @@ public class TestAtsApplication {
 	public RestTemplate restTemplate(RestTemplateBuilder builder) {
 		return builder.build();
 	}
+	Boolean uploadData =true;
+	@Bean
+	public CommandLineRunner run(RestTemplate restTemplate) throws Exception {
+		
+		if(uploadData) {
+			return args -> {
+				String fooResourceUrl
+				  = "http://test.ats-digital.com:3000/products";
+				ResponseEntity<String> response
+				  = restTemplate.getForEntity(fooResourceUrl ,String.class);	
+				ObjectMapper mapper = new ObjectMapper();
+				mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+				JsonNode root = mapper.readTree(response.getBody());
+				JsonNode name = root.path("products");
+				System.out.println(name);
+					
+				ProductDto[] foo = mapper.readValue(name.toString(), ProductDto[].class);
+				
+				for (ProductDto product : foo) {
+					
+					System.out.println("product"+product.toString());
+					atsService.saveProduct(product);
+					
 
-//	@Bean
-//	public CommandLineRunner run(RestTemplate restTemplate) throws Exception {
-//		return args -> {
-//			String fooResourceUrl
-//			  = "http://test.ats-digital.com:3000/products";
-//			ResponseEntity<String> response
-//			  = restTemplate.getForEntity(fooResourceUrl ,String.class);	
-//			ObjectMapper mapper = new ObjectMapper();
-//			mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-//			JsonNode root = mapper.readTree(response.getBody());
-//			JsonNode name = root.path("products");
-//			System.out.println(name);
-//				
-//			ProductDto[] foo = mapper.readValue(name.toString(), ProductDto[].class);
-//			
-//			for (ProductDto product : foo) {
-//				
-//				System.out.println("product"+product.toString());
-//				atsService.saveProduct(product);
-//				
-//
-//				for (ReviewDto review : product.getReviews()) {
-//					System.out.println("review"+review.toString());
-//					atsService.saveReview(review,product.getProductName());
-//					
-//				}	
-//			}
-//			 
-//		};
-//		
-//	}
+					for (ReviewDto review : product.getReviews()) {
+						System.out.println("review"+review.toString());
+						atsService.saveReview(review,product.getProductName());
+						
+					}	
+				}
+				 this.uploadData = false;
+			};
+		}else {
+			return args -> {};
+		}
+	
+		
+	}
 	
 
-	
 
 	
 	
